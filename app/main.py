@@ -1,17 +1,25 @@
-from fastapi import Body, FastAPI, File, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import RedirectResponse
 
-from app.model import TranscribeRequest
+from app.log_config import get_logger
+from app.model import Config
+from app.whisperx_asr import WhisperxASR
 
-app = FastAPI()
+logger = get_logger(__name__)
 
-@app.get("/", response_class=RedirectResponse, include_in_schema=False)
+whisperx = WhisperxASR()
+whisperx.load_model()
+
+api = FastAPI()
+
+@api.get("/", response_class=RedirectResponse, include_in_schema=False)
 async def index():
     return "/docs"
 
-@app.post("/transcribe")
+@api.post("/transcribe", tags=["Transcribe"])
 async def transcribe(
         file: UploadFile = File(...),
-        config: TranscribeRequest = Body(...),
+        config: Config = Form(...),
 ):
+    logger.info(f"Transcribe request received: {config}")
     return {"transcription": "transcription"}
