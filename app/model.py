@@ -1,22 +1,23 @@
 import json
+from typing import Optional
 
 from pydantic import BaseModel, model_validator
 
 
 class DiarizationConfig(BaseModel):
-    enableSpeakerDiarization: bool
-    minSpeakerCount: int
-    maxSpeakerCount: int
+    enableSpeakerDiarization: bool = True
+    minSpeakerCount: Optional[int] = None
+    maxSpeakerCount: Optional[int] = None
 
 
 class FeaturesConfig(BaseModel):
-    enableWordLevelTimestamps: bool
-    diarization: DiarizationConfig
+    enableWordLevelTimestamps: bool = False
+    diarization: Optional[DiarizationConfig] = None
 
 
-class Config(BaseModel):
-    languageCode: str
-    features: FeaturesConfig
+class ConfigRequest(BaseModel):
+    languageCode: Optional[str] = None
+    features: Optional[FeaturesConfig] = None
 
     @model_validator(mode="before")
     @classmethod

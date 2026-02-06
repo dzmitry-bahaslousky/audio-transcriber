@@ -24,6 +24,8 @@ class Config:
     # after being idle for this many seconds. A value of 0 means the model will never be unloaded.
     ASR_MODEL_IDLE_TIMEOUT = int(os.getenv("ASR_MODEL_IDLE_TIMEOUT", 0))
 
+    ASR_BATCH_SIZE = int(os.getenv("ASR_BATCH_SIZE", 4))
+
     SAMPLE_RATE = int(os.getenv("SAMPLE_RATE", 16000))
 
 

@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import RedirectResponse
 
 from app.log_config import get_logger
-from app.model import Config
+from app.model import ConfigRequest
 from app.whisperx_asr import WhisperxASR
 
 logger = get_logger(__name__)
@@ -19,7 +19,8 @@ async def index():
 @api.post("/transcribe", tags=["Transcribe"])
 async def transcribe(
         file: UploadFile = File(...),
-        config: Config = Form(...),
+        config: ConfigRequest = Form(...),
 ):
     logger.info(f"Transcribe request received: {config}")
+    whisperx.transcribe(file, config)
     return {"transcription": "transcription"}
