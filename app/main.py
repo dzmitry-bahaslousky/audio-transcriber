@@ -27,17 +27,17 @@ async def transcribe(
     return whisperx_asr.transcribe(file, config)
 
 
-@api.get("/health")
+@api.get("/health", tags=["Health Check"])
 async def health_check():
     return {"status": "ok"}
 
 
-@api.get("/health/liveness")
+@api.get("/health/liveness", tags=["Health Check"])
 async def liveness_check():
     return {"status": "alive"}
 
 
-@api.get("/health/readiness")
+@api.get("/health/readiness", tags=["Health Check"])
 async def readiness_check():
     if not whisperx_asr.is_ready():
         raise HTTPException(status_code=503, detail="Models not loaded")

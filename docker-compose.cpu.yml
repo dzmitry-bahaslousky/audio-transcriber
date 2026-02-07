@@ -1,0 +1,19 @@
+# docker compose -f docker-compose.cpu.yml up --build
+services:
+  transcriber:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    image: audio-transcriber:cpu
+    ports:
+      - "8000:8000"
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - ASR_DEVICE=cpu
+      - ASR_COMPUTE_TYPE=int8
+    volumes:
+      - model-cache:/home/appuser/.cache/whisper
+    restart: unless-stopped
+
+volumes:
+  model-cache:
