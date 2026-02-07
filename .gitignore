@@ -44,3 +44,4 @@ poetry/core/*
 public
 
 CLAUDE.md
+.env
