@@ -41,7 +41,7 @@ class WhisperxASR:
 
         logger.info("Loading diarization model")
         self._model['diarize'] = DiarizationPipeline(
-            use_auth_token=Config.HF_TOKEN,
+            token=Config.HF_TOKEN,
             device=Config.ASR_DEVICE
         )
 
